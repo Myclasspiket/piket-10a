@@ -45,8 +45,8 @@ button{
 
 .sidebar{
   position:fixed;
-  top:0;
   left:0;
+  top:0;
   bottom:0;
   width:250px;
   background:var(--card);
@@ -69,12 +69,12 @@ button{
 .nav button{
   display:block;
   width:100%;
-  padding:13px 15px;
-  margin-bottom:5px;
   background:transparent;
   color:var(--muted);
+  padding:13px 15px;
   border-radius:13px;
   text-align:left;
+  margin-bottom:5px;
   font-weight:700;
   transition:.2s;
 }
@@ -514,7 +514,7 @@ th{
   color:var(--muted);
 }
 
-/* KALENDER */
+/* CALENDAR */
 
 .calendar-card{
   margin-bottom:20px;
@@ -612,15 +612,6 @@ th{
   justify-content:space-between;
   align-items:center;
   gap:10px;
-}
-
-.today-badge{
-  background:var(--light);
-  color:var(--primary);
-  padding:7px 10px;
-  border-radius:10px;
-  font-size:12px;
-  font-weight:800;
 }
 
 /* BOTTOM NAV */
@@ -738,75 +729,45 @@ body.dark .login-form input{
 <body>
 
 <aside class="sidebar">
-
-  <div class="logo">
-    📚 MyClass <span>Piket</span>
-  </div>
-
+  <div class="logo">📚 MyClass <span>Piket</span></div>
   <nav class="nav" id="sideNav"></nav>
-
 </aside>
 
 <main class="main">
 
 <header class="topbar">
-
   <div>
     <div class="muted" id="dateDisplay"></div>
   </div>
 
   <div class="top-actions">
-
-    <div class="user-chip" id="userChip">
-      👤 Tamu
-    </div>
-
-    <button class="login-btn" onclick="openLogin()">
-      Login
-    </button>
-
+    <div class="user-chip" id="userChip">👤 Tamu</div>
+    <button class="login-btn" onclick="openLogin()">Login</button>
   </div>
-
 </header>
 
-<!-- BERANDA -->
+<!-- HOME -->
 
 <section class="page active" id="home">
 
   <div class="hero">
-
-    <h1 id="greeting">
-      Halo, Siswa X A! 👋
-    </h1>
-
-    <p>
-      Piket lebih tertib, kelas lebih nyaman.
-    </p>
-
+    <h1 id="greeting">Halo, Siswa X A! 👋</h1>
+    <p>Piket lebih tertib, kelas lebih nyaman.</p>
   </div>
-
-  <!-- KALENDER -->
 
   <div class="card calendar-card">
 
     <div class="calendar-header">
-
-      <div class="calendar-title" id="calendarTitle">
-        Kalender
-      </div>
+      <div class="calendar-title" id="calendarTitle">Kalender</div>
 
       <div class="calendar-controls">
-
         <button onclick="changeMonth(-1)">‹</button>
         <button onclick="goToday()">●</button>
         <button onclick="changeMonth(1)">›</button>
-
       </div>
-
     </div>
 
     <div class="calendar-weekdays">
-
       <div>Min</div>
       <div>Sen</div>
       <div>Sel</div>
@@ -814,7 +775,6 @@ body.dark .login-form input{
       <div>Kam</div>
       <div>Jum</div>
       <div>Sab</div>
-
     </div>
 
     <div class="calendar-grid" id="calendarGrid"></div>
@@ -827,13 +787,9 @@ body.dark .login-form input{
 
   <div class="section-head">
 
-    <div class="today-title">
-
-      <div>
-        <h2>📅 Jadwal Piket</h2>
-        <p class="muted" id="todayDescription"></p>
-      </div>
-
+    <div>
+      <h2 id="todayHeading">📅 Jadwal Piket Hari Ini</h2>
+      <p class="muted" id="todayDescription"></p>
     </div>
 
     <button class="primary-btn" onclick="showPage('schedule')">
@@ -846,7 +802,7 @@ body.dark .login-form input{
 
 </section>
 
-<!-- JADWAL -->
+<!-- SCHEDULE -->
 
 <section class="page" id="schedule">
 
@@ -862,20 +818,15 @@ body.dark .login-form input{
 
 </section>
 
-<!-- SISWA -->
+<!-- STUDENTS -->
 
 <section class="page" id="students">
 
   <div class="section-head">
 
     <div>
-
       <h1>👥 Daftar Siswa</h1>
-
-      <p class="muted">
-        Kelola data anggota kelas.
-      </p>
-
+      <p class="muted">Kelola data anggota kelas.</p>
     </div>
 
     <button class="primary-btn" onclick="openStudentModal()">
@@ -893,14 +844,12 @@ body.dark .login-form input{
     >
 
     <select id="filterDay" onchange="renderStudents()">
-
       <option value="">Semua Hari</option>
       <option>Senin</option>
       <option>Selasa</option>
       <option>Rabu</option>
       <option>Kamis</option>
       <option>Jumat</option>
-
     </select>
 
   </div>
@@ -910,7 +859,6 @@ body.dark .login-form input{
     <table>
 
       <thead>
-
         <tr>
           <th>No</th>
           <th>Nama</th>
@@ -920,7 +868,6 @@ body.dark .login-form input{
           <th>Status</th>
           <th>Aksi</th>
         </tr>
-
       </thead>
 
       <tbody id="studentTable"></tbody>
@@ -931,7 +878,7 @@ body.dark .login-form input{
 
 </section>
 
-<!-- REKAP -->
+<!-- RECAP -->
 
 <section class="page" id="recap">
 
@@ -941,7 +888,7 @@ body.dark .login-form input{
     Pantau pelaksanaan piket kelas.
   </p>
 
-  <div class="tabs">
+  <div class="tabs" id="recapTabs">
 
     <button class="active" onclick="renderRecap('Harian',this)">
       Harian
@@ -963,7 +910,7 @@ body.dark .login-form input{
 
 </section>
 
-<!-- PENGINGAT -->
+<!-- REMINDER -->
 
 <section class="page" id="reminder">
 
@@ -979,7 +926,7 @@ body.dark .login-form input{
 
 </section>
 
-<!-- PENGATURAN -->
+<!-- SETTINGS -->
 
 <section class="page" id="settings">
 
@@ -996,56 +943,41 @@ body.dark .login-form input{
     <div class="form-grid">
 
       <div class="form-group">
-
         <label>Nama Kelas</label>
-
         <input id="className">
-
       </div>
 
       <div class="form-group">
-
         <label>Waktu Piket</label>
-
         <input id="defaultTime">
-
       </div>
 
       <div class="form-group">
-
         <label>Tema</label>
 
         <select id="theme">
-
           <option value="light">Terang</option>
           <option value="dark">Gelap</option>
-
         </select>
 
       </div>
 
       <div class="form-group">
-
         <label>Notifikasi</label>
 
         <select id="notifications">
-
           <option>Aktif</option>
           <option>Nonaktif</option>
-
         </select>
 
       </div>
 
       <div class="form-group">
-
         <label>Pengingat</label>
 
         <select id="reminderSetting">
-
           <option>Aktif</option>
           <option>Nonaktif</option>
-
         </select>
 
       </div>
@@ -1066,7 +998,7 @@ body.dark .login-form input{
 
 <nav class="bottom-nav" id="bottomNav"></nav>
 
-<!-- MODAL SISWA -->
+<!-- STUDENT MODAL -->
 
 <div class="modal" id="studentModal">
 
@@ -1081,55 +1013,40 @@ body.dark .login-form input{
     <div class="form-grid">
 
       <div class="form-group full">
-
         <label>Nama Siswa</label>
-
         <input id="studentName">
-
       </div>
 
       <div class="form-group">
-
         <label>Kelas</label>
-
         <input id="studentClass">
-
       </div>
 
       <div class="form-group">
-
         <label>Hari Piket</label>
 
         <select id="studentDay">
-
           <option>Senin</option>
           <option>Selasa</option>
           <option>Rabu</option>
           <option>Kamis</option>
           <option>Jumat</option>
-
         </select>
 
       </div>
 
       <div class="form-group full">
-
         <label>Waktu Piket</label>
-
         <input id="studentTime">
-
       </div>
 
       <div class="form-group">
-
         <label>Status</label>
 
         <select id="studentStatus">
-
           <option>Belum Piket</option>
           <option>Sudah Piket</option>
           <option>Tidak Melaksanakan</option>
-
         </select>
 
       </div>
@@ -1152,7 +1069,7 @@ body.dark .login-form input{
 
 </div>
 
-<!-- MODAL HAPUS -->
+<!-- DELETE MODAL -->
 
 <div class="modal" id="deleteModal">
 
@@ -1239,13 +1156,11 @@ body.dark .login-form input{
 <div class="toast" id="toast"></div>
 
 <script>
-
-/* =========================
-   DATA
-========================= */
+/* =====================================================
+   DATA AWAL
+===================================================== */
 
 const initialStudents = [
-
   ["Zaki","Senin"],
   ["Rara","Senin"],
   ["Damar","Senin"],
@@ -1286,7 +1201,6 @@ const initialStudents = [
   ["Zidan","Jumat"],
   ["Hani","Jumat"],
   ["Mia","Jumat"]
-
 ];
 
 const days = [
@@ -1307,15 +1221,54 @@ const dayIndex = {
   Sabtu:6
 };
 
-/* =========================
+const monthNames = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember"
+];
+
+/* =====================================================
    STATE
-========================= */
+===================================================== */
 
 let students =
-  JSON.parse(localStorage.getItem("myclass_students")) || [];
+  JSON.parse(localStorage.getItem("myclass_students"));
+
+/*
+  Kalau belum ada data tersimpan,
+  buat data dari initialStudents.
+*/
+
+if(!Array.isArray(students) || students.length === 0){
+
+  students = initialStudents.map(function(item){
+    return {
+      name:item[0],
+      className:"X A",
+      day:item[1],
+      time:"06.30–07.00",
+      status:"Belum Piket"
+    };
+  });
+
+  saveStudents();
+}
 
 let settings =
-  JSON.parse(localStorage.getItem("myclass_settings")) || {
+  JSON.parse(localStorage.getItem("myclass_settings"));
+
+if(!settings){
+
+  settings = {
     className:"X A",
     defaultTime:"06.30–07.00",
     theme:"light",
@@ -1323,22 +1276,8 @@ let settings =
     reminder:"Aktif"
   };
 
+  saveSettingsData();
+}
+
 let currentUser =
-  JSON.parse(localStorage.getItem("myclass_user")) || null;
-
-let editIndex = null;
-let deleteIndex = null;
-
-let selectedDate = new Date();
-
-let calendarMonth = selectedDate.getMonth();
-let calendarYear = selectedDate.getFullYear();
-
-let selectedScheduleDay =
-  days.includes(getDayName(selectedDate))
-    ? getDayName(selectedDate)
-    : "Senin";
-
-/* =========================
-   INITIALIZE
-========================
+  JSON.parse(localStorage.getItem("myclass_user")) || nul
