@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyClass Piket</title>
+
+  <style>
+    :root {
+      --bg: #f6f7ff;
+      --card: #ffffff;
+      --text: #24233a;
+      --muted: #77758b;
+      --primary: #7567e8;
+      --primary-light: #efedff;
+      --border: #e9e7f5;
+      --success: #27ae60;
+      --warning: #f2a900;
+      --danger: #e55353;
+      --shadow: 0 10px 30px rgba(79, 70, 150, .09);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 250px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 25px 15px;
+      z-index: 20;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      padding: 0 12px;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .nav button {
+      width: 100%;
+      background: transparent;
+      color: var(--muted);
+      padding: 13px 15px;
+      border-radius: 13px;
+      text-align: left;
+      margin-bottom: 5px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: 250px;
+      padding: 25px 30px 80px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      gap: 15px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 9px 13px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .login-btn,
+    .primary-btn {
+      background: var(--primary);
+      color: white;
+      padding: 11px 17px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .login-btn:hover,
+    .primary-btn:hover {
+      background: #6255d8;
+      transform: translateY(-1px);
+    }
+
+    /* PAGE */
+    .page {
+      display: none;
+      animation: pageIn .25s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #7567e8, #a294ff);
+      color: white;
+      padding: 30px;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin-bottom: 6px;
+    }
+
+    .hero p {
+      opacity: .9;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .stat-icon {
+      font-size: 30px;
+    }
+
+    .stat-number {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* SECTION HEADER */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin: 25px 0 15px;
+    }
+
+    /* STUDENT CARDS */
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 13px;
+    }
+
+    .student-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      transition: .2s;
+    }
+
+    .student-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .student-name {
+      font-weight: 800;
+      font-size: 17px;
+      margin-bottom: 7px;
+    }
+
+    .day-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .Senin {
+      background: #e9fff1;
+      color: #18854a;
+    }
+
+    .Selasa {
+      background: #e8f3ff;
+      color: #2771ba;
+    }
+
+    .Rabu {
+      background: #f1eaff;
+      color: #7450b8;
+    }
+
+    .Kamis {
+      background: #fff0df;
+      color: #bd7217;
+    }
+
+    .Jumat {
+      background: #ffe8e8;
+      color: #c83e3e;
+    }
+
+    .status {
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .status-sudah {
+      color: var(--success);
+    }
+
+    .status-belum {
+      color: var(--warning);
+    }
+
+    .status-tidak {
+      color: var(--danger);
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+
+    .tabs button {
+      padding: 10px 15px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      white-space: nowrap;
+    }
+
+    .tabs button.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* TOOLBAR */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .toolbar input,
+    .toolbar select,
+    .form input,
+    .form select {
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--card);
+      color: var(--text);
+      outline: none;
+    }
+
+    .toolbar input {
+      width: 280px;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 750px;
+    }
+
+    th,
+    td {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: var(--primary-light);
+    }
+
+    .action-btn {
+      padding: 7px 9px;
+      border-radius: 8px;
+      background: #f0eff9;
+      margin-right: 4px;
+    }
+
+    .delete-btn {
+      background: #ffeaea;
+      color: #c33;
+    }
+
+    /* PROGRESS */
+    .progress {
+      height: 9px;
+      background: #ecebf4;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #a493ff);
+      border-radius: 20px;
+    }
+
+    /* FORM */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 27, 55, .5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      color: var(--text);
+      width: min(480px, 100%);
+      padding: 25px;
+      border-radius: 22px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .cancel-btn {
+      background: #eeeef5;
+      padding: 10px 14px;
+      border-radius: 10px;
+    }
+
+    /* LOGIN */
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #7567e8, #a294ff);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 200;
+    }
+
+    .login-screen.show {
+      display: flex;
+    }
+
+    .login-box {
+      width: min(400px, 100%);
+      background: white;
+      padding: 28px;
+      border-radius: 24px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.2);
+    }
+
+    .login-box h1 {
+      margin-bottom: 5px;
+    }
+
+    .login-form {
+      margin-top: 20px;
+    }
+
+    .login-form label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd9f2;
+      border-radius: 11px;
+      margin-bottom: 14px;
+    }
+
+    .login-form button {
+      width: 100%;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 25px;
+      background: #24233a;
+      color: white;
+      padding: 13px 18px;
+      border-radius: 12px;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: .25s;
+      z-index: 300;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      display: none;
+    }
+
+    /* DARK MODE */
+    body.dark {
+      --bg: #151522;
+      --card: #20202e;
+      --text: #eeeef7;
+      --muted: #aaa8bd;
+      --border: #353449;
+    }
+
+    body.dark .sidebar,
+    body.dark .modal-box,
+    body.dark .login-box,
+    body.dark .toolbar input,
+    body.dark .toolbar select,
+    body.dark .form input,
+    body.dark .form select {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    body.dark .bottom-nav {
+      background: var(--card);
+    }
+
+    /* MOBILE */
+    @media (max-width: 850px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 18px 15px 90px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .user-chip {
+        display: none;
+      }
+
+      .bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: space-around;
+        background: white;
+        border-top: 1px solid var(--border);
+        padding: 7px 3px;
+        z-index: 50;
+      }
+
+      .bottom-nav button {
+        background: transparent;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .bottom-nav button.active {
+        color: var(--primary);
+      }
+
+      .bottom-nav span {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 2px;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .section-head button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    📚 MyClass <span>Piket</span>
+  </div>
+
+  <nav class="nav" id="sideNav"></nav>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div>
+      <div class="muted" id="dateDisplay"></div>
+    </div>
+
+    <div class="top-actions">
+      <div class="user-chip" id="userChip">
+        👤 Tamu
+      </div>
+
+      <button class="login-btn" id="loginButton">
+        Login
+      </button>
+    </div>
+  </header>
+
+  <!-- BERANDA -->
+  <section class="page active" id="home">
+
+    <div class="hero">
+      <h1 id="greeting">
+        Halo, Siswa X A! 👋
+      </h1>
+
+      <p>
+        Kelola jadwal piket kelas dengan lebih mudah.
+      </p>
+    </div>
+
+    <div class="stats" id="homeStats"></div>
+
+    <div class="section-head">
+      <div>
+        <h2>📅 Jadwal Piket Hari Ini</h2>
+      </div>
+
+      <button class="primary-btn" onclick="showPage('schedule')">
+        Lihat Jadwal Lengkap →
+      </button>
+    </div>
+
+    <div class="student-grid" id="todayStudents"></div>
+
+  </section>
+
+  <!-- JADWAL -->
+  <section class="page" id="schedule">
+
+    <div>
+      <h1>📅 Jadwal Piket</h1>
+      <p class="muted">
+        Lihat pembagian piket berdasarkan hari.
+      </p>
+    </div>
+
+    <div class="tabs" id="dayTabs"></div>
+
+    <div class="student-grid" id="scheduleStudents"></div>
+
+  </section>
+
+  <!-- SISWA -->
+  <section class="page" id="students">
+
+    <div class="section-head">
+
+      <div>
+        <h1>👥 Daftar Siswa</h1>
+        <p class="muted">
+          Kelola data anggota kelas.
+        </p>
+      </div>
+
+      <button class="primary-btn" onclick="openStudentModal()">
+        ＋ Tambah Siswa
+      </button>
+
+    </div>
+
+    <div class="toolbar">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔎 Cari nama siswa..."
+        oninput="renderStudents()"
+      >
+
+      <select id="filterDay" onchange="renderStudents()">
+        <option value="">Semua Hari</option>
+        <option>Senin</option>
+        <option>Selasa</option>
+        <option>Rabu</option>
+        <option>Kamis</option>
+        <option>Jumat</option>
+      </select>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Kelas</th>
+            <th>Hari</th>
+            <th>Waktu</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+
+        <tbody id="studentTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+  <!-- REKAP -->
+  <section class="page" id="recap">
+
+    <div>
+      <h1>📊 Rekap Piket</h1>
+      <p class="muted">
+        Pantau pelaksanaan piket kelas.
+      </p>
+    </div>
+
+    <div class="tabs">
+      <button class="active" onclick="renderRecap('Harian', this)">
+        Harian
+      </button>
+
+      <button onclick="renderRecap('Mingguan', this)">
+        Mingguan
+      </button>
+
+      <button onclick="renderRecap('Bulanan', this)">
+        Bulanan
+      </button>
+    </div>
+
+    <div class="stats" id="recapStats"></div>
+
+    <div id="recapContent"></div>
+
+  </section>
+
+  <!-- PENGINGAT -->
+  <section class="page" id="reminder">
+
+    <div class="section-head">
+
+      <div>
+        <h1>🔔 Pengingat Piket</h1>
+
+        <p class="muted">
+          Jangan sampai lupa jadwal piketmu.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="card" id="reminderContent"></div>
+
+  </section>
+
+  <!-- PENGATURAN -->
+  <section class="page" id="settings">
+
+    <div>
+      <h1>⚙️ Pengaturan</h1>
+
+      <p class="muted">
+        Atur preferensi aplikasi.
+      </p>
+    </div>
+
+    <br>
+
+    <div class="card">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Nama Kelas</label>
+          <input id="className" value="X A">
+        </div>
+
+        <div class="form-group">
+          <label>Waktu Piket</label>
+          <input id="defaultTime" value="06.30–07.00">
+        </div>
+
+        <div class="form-group">
+          <label>Tema</label>
+
+          <select id="theme">
+            <option value="light">
+              Terang
+            </option>
+
+            <option value="dark">
+              Gelap
+            </option>
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label>Notifikasi</label>
+
+          <select id="notifications">
+            <option>Aktif</option>
+            <option>Nonaktif</option>
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label>Pengingat</label>
+
+          <select id="reminderSetting">
+            <option>Aktif</option>
+            <option>Nonaktif</option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <button class="primary-btn" onclick="saveSettings()">
+        💾 Simpan Pengaturan
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+<!-- MOBILE NAV -->
+<nav class="bottom-nav" id="bottomNav"></nav>
+
+<!-- STUDENT MODAL -->
+<div class="modal" id="studentModal">
+
+  <div class="modal-box">
+
+    <h2 id="modalTitle">
+      ＋ Tambah Siswa
+    </h2>
+
+    <p class="muted">
+      Masukkan data siswa.
+    </p>
+
+    <br>
+
+    <div class="form-grid">
+
+      <div class="form-group full">
+        <label>Nama Siswa</label>
+        <input id="studentName">
+      </div>
+
+      <div class="form-group">
+        <label>Kelas</label>
+        <input id="studentClass" value="X A">
+      </div>
+
+      <div class="form-group">
+        <label>Hari Piket</label>
+
+        <select id="studentDay">
+          <option>Senin</option>
+          <option>Selasa</option>
+          <option>Rabu</option>
+          <option>Kamis</option>
+          <option>Jumat</option>
+        </select>
+
+      </div>
+
+      <div class="form-group full">
+        <label>Waktu Piket</label>
+        <input id="studentTime" value="06.30–07.00">
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+
+        <select id="studentStatus">
+          <option>Belum Piket</option>
+          <option>Sudah Piket</option>
+          <option>Tidak Melaksanakan</option>
+        </select>
+
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="cancel-btn" onclick="closeStudentModal()">
+        Batal
+      </button>
+
+      <button class="primary-btn" onclick="saveStudent()">
+        💾 Simpan
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal" id="deleteModal">
+
+  <div class="modal-box">
+
+    <h2>🗑️ Hapus Siswa?</h2>
+
+    <p style="margin-top:10px">
+      Apakah kamu yakin ingin menghapus siswa ini?
+    </p>
+
+    <div class="modal-actions">
+
+      <button class="cancel-btn" onclick="closeDeleteModal()">
+        Batal
+      </button>
+
+      <button
+        class="primary-btn"
+        style="background:#e55353"
+        onclick="deleteStudent()"
+      >
+        Hapus Permanen
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+
+  <div class="login-box">
+
+    <div style="font-size:35px">
+      📚
+    </div>
+
+    <h1>
+      MyClass Piket
+    </h1>
+
+    <p class="muted">
+      Silakan login untuk melanjutkan.
+    </p>
+
+    <div class="login-form">
+
+      <label>
+        Username
+      </label>
+
+      <input
+        type="text"
+        id="username"
+        placeholder="Masukkan username"
+      >
+
+      <label>
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Masukkan password"
+      >
+
+      <button
+        class="primary-btn"
+        onclick="login()"
+      >
+        Masuk
+      </button>
+
+      <br><br>
+
+      <button
+        class="cancel-btn"
+        style="width:100%"
+        onclick="closeLogin()"
+      >
+        Kembali
+      </button>
+
+    </div>
+
+    <p
+      class="muted"
+      style="margin-top:15px;font-size:12px"
+    >
+      Admin demo: <b>admin</b> / <b>admin123</b>
+    </p>
+
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* =========================
+   DATA AWAL
+========================= */
+
+const initialStudents = [
+
+  ["Zaki", "Senin"],
+  ["Rara", "Senin"],
+  ["Damar", "Senin"],
+  ["Anna", "Senin"],
+  ["Putra", "Senin"],
+  ["Aivy", "Senin"],
+  ["Vita", "Senin"],
+
+  ["Rafa", "Selasa"],
+  ["Disty", "Selasa"],
+  ["Alief", "Selasa"],
+  ["Balkis", "Selasa"],
+  ["Andi", "Selasa"],
+  ["Ziya", "Selasa"],
+  ["Asya", "Selasa"],
+  ["Nayla", "Selasa"],
+
+  ["Jazil", "Rabu"],
+  ["Aaliyah", "Rabu"],
+  ["Zaidan", "Rabu"],
+  ["Reni", "Rabu"],
+  ["Ikram", "Rabu"],
+  ["Amira", "Rabu"],
+  ["Callista", "Rabu"],
+
+  ["Fahri", "Kamis"],
+  ["Naura", "Kamis"],
+  ["Yoga", "Kamis"],
+  ["Salwa", "Kamis"],
+  ["Devan", "Kamis"],
+  ["Farras", "Kamis"],
+  ["Nur", "Kamis"],
+
+  ["Reski", "Jumat"],
+  ["Rizka", "Jumat"],
+  ["Raffa", "Jumat"],
+  ["Syifa", "Jumat"],
+  ["Zidan", "Jumat"],
+  ["Hani", "Jumat"],
+  ["Mia", "Jumat"]
