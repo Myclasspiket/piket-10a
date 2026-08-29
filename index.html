@@ -1,1085 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyClass Piket</title>
-
-  <style>
-    :root {
-      --bg: #f6f7ff;
-      --card: #ffffff;
-      --text: #24233a;
-      --muted: #77758b;
-      --primary: #7567e8;
-      --primary-light: #efedff;
-      --border: #e9e7f5;
-      --success: #27ae60;
-      --warning: #f2a900;
-      --danger: #e55353;
-      --shadow: 0 10px 30px rgba(79, 70, 150, .09);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 250px;
-      background: var(--card);
-      border-right: 1px solid var(--border);
-      padding: 25px 15px;
-      z-index: 20;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 30px;
-      padding: 0 12px;
-    }
-
-    .logo span {
-      color: var(--primary);
-    }
-
-    .nav button {
-      width: 100%;
-      background: transparent;
-      color: var(--muted);
-      padding: 13px 15px;
-      border-radius: 13px;
-      text-align: left;
-      margin-bottom: 5px;
-      font-weight: 600;
-      transition: .2s;
-    }
-
-    .nav button:hover,
-    .nav button.active {
-      background: var(--primary-light);
-      color: var(--primary);
-    }
-
-    /* MAIN */
-    .main {
-      margin-left: 250px;
-      padding: 25px 30px 80px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
-      gap: 15px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .user-chip {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 9px 13px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .login-btn,
-    .primary-btn {
-      background: var(--primary);
-      color: white;
-      padding: 11px 17px;
-      border-radius: 12px;
-      font-weight: 700;
-      transition: .2s;
-    }
-
-    .login-btn:hover,
-    .primary-btn:hover {
-      background: #6255d8;
-      transform: translateY(-1px);
-    }
-
-    /* PAGE */
-    .page {
-      display: none;
-      animation: pageIn .25s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    @keyframes pageIn {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* HERO */
-    .hero {
-      background: linear-gradient(135deg, #7567e8, #a294ff);
-      color: white;
-      padding: 30px;
-      border-radius: 24px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero h1 {
-      margin-bottom: 6px;
-    }
-
-    .hero p {
-      opacity: .9;
-    }
-
-    /* CARD */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    /* STATS */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 25px;
-    }
-
-    .stat {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .stat-icon {
-      font-size: 30px;
-    }
-
-    .stat-number {
-      font-size: 26px;
-      font-weight: 800;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* SECTION HEADER */
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin: 25px 0 15px;
-    }
-
-    /* STUDENT CARDS */
-    .student-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 13px;
-    }
-
-    .student-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 16px;
-      box-shadow: var(--shadow);
-      transition: .2s;
-    }
-
-    .student-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .student-name {
-      font-weight: 800;
-      font-size: 17px;
-      margin-bottom: 7px;
-    }
-
-    .day-badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .Senin {
-      background: #e9fff1;
-      color: #18854a;
-    }
-
-    .Selasa {
-      background: #e8f3ff;
-      color: #2771ba;
-    }
-
-    .Rabu {
-      background: #f1eaff;
-      color: #7450b8;
-    }
-
-    .Kamis {
-      background: #fff0df;
-      color: #bd7217;
-    }
-
-    .Jumat {
-      background: #ffe8e8;
-      color: #c83e3e;
-    }
-
-    .status {
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 8px;
-    }
-
-    .status-sudah {
-      color: var(--success);
-    }
-
-    .status-belum {
-      color: var(--warning);
-    }
-
-    .status-tidak {
-      color: var(--danger);
-    }
-
-    /* TABS */
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      margin: 15px 0;
-    }
-
-    .tabs button {
-      padding: 10px 15px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      white-space: nowrap;
-    }
-
-    .tabs button.active {
-      background: var(--primary);
-      color: white;
-    }
-
-    /* TOOLBAR */
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
-
-    .toolbar input,
-    .toolbar select,
-    .form input,
-    .form select {
-      padding: 11px 13px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: var(--card);
-      color: var(--text);
-      outline: none;
-    }
-
-    .toolbar input {
-      width: 280px;
-    }
-
-    /* TABLE */
-    .table-wrap {
-      overflow-x: auto;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 750px;
-    }
-
-    th,
-    td {
-      padding: 13px 15px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      font-size: 14px;
-    }
-
-    th {
-      background: var(--primary-light);
-    }
-
-    .action-btn {
-      padding: 7px 9px;
-      border-radius: 8px;
-      background: #f0eff9;
-      margin-right: 4px;
-    }
-
-    .delete-btn {
-      background: #ffeaea;
-      color: #c33;
-    }
-
-    /* PROGRESS */
-    .progress {
-      height: 9px;
-      background: #ecebf4;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .progress span {
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), #a493ff);
-      border-radius: 20px;
-    }
-
-    /* FORM */
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    /* MODAL */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(30, 27, 55, .5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 100;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-box {
-      background: white;
-      color: var(--text);
-      width: min(480px, 100%);
-      padding: 25px;
-      border-radius: 22px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 20px;
-    }
-
-    .cancel-btn {
-      background: #eeeef5;
-      padding: 10px 14px;
-      border-radius: 10px;
-    }
-
-    /* LOGIN */
-    .login-screen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #7567e8, #a294ff);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 200;
-    }
-
-    .login-screen.show {
-      display: flex;
-    }
-
-    .login-box {
-      width: min(400px, 100%);
-      background: white;
-      padding: 28px;
-      border-radius: 24px;
-      box-shadow: 0 25px 70px rgba(0,0,0,.2);
-    }
-
-    .login-box h1 {
-      margin-bottom: 5px;
-    }
-
-    .login-form {
-      margin-top: 20px;
-    }
-
-    .login-form label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .login-form input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd9f2;
-      border-radius: 11px;
-      margin-bottom: 14px;
-    }
-
-    .login-form button {
-      width: 100%;
-    }
-
-    /* TOAST */
-    .toast {
-      position: fixed;
-      right: 20px;
-      bottom: 25px;
-      background: #24233a;
-      color: white;
-      padding: 13px 18px;
-      border-radius: 12px;
-      opacity: 0;
-      transform: translateY(15px);
-      pointer-events: none;
-      transition: .25s;
-      z-index: 300;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .empty {
-      text-align: center;
-      padding: 40px;
-      color: var(--muted);
-    }
-
-    /* BOTTOM NAV */
-    .bottom-nav {
-      display: none;
-    }
-
-    /* DARK MODE */
-    body.dark {
-      --bg: #151522;
-      --card: #20202e;
-      --text: #eeeef7;
-      --muted: #aaa8bd;
-      --border: #353449;
-    }
-
-    body.dark .sidebar,
-    body.dark .modal-box,
-    body.dark .login-box,
-    body.dark .toolbar input,
-    body.dark .toolbar select,
-    body.dark .form input,
-    body.dark .form select {
-      background: var(--card);
-      color: var(--text);
-    }
-
-    body.dark .bottom-nav {
-      background: var(--card);
-    }
-
-    /* MOBILE */
-    @media (max-width: 850px) {
-      .sidebar {
-        display: none;
-      }
-
-      .main {
-        margin-left: 0;
-        padding: 18px 15px 90px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full {
-        grid-column: auto;
-      }
-
-      .topbar {
-        align-items: flex-start;
-      }
-
-      .user-chip {
-        display: none;
-      }
-
-      .bottom-nav {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        justify-content: space-around;
-        background: white;
-        border-top: 1px solid var(--border);
-        padding: 7px 3px;
-        z-index: 50;
-      }
-
-      .bottom-nav button {
-        background: transparent;
-        color: var(--muted);
-        font-size: 10px;
-        font-weight: 700;
-      }
-
-      .bottom-nav button.active {
-        color: var(--primary);
-      }
-
-      .bottom-nav span {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 2px;
-      }
-
-      .section-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .section-head button {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="logo">
-    📚 MyClass <span>Piket</span>
-  </div>
-
-  <nav class="nav" id="sideNav"></nav>
-</aside>
-
-<!-- MAIN -->
-<main class="main">
-
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div>
-      <div class="muted" id="dateDisplay"></div>
-    </div>
-
-    <div class="top-actions">
-      <div class="user-chip" id="userChip">
-        👤 Tamu
-      </div>
-
-      <button class="login-btn" id="loginButton">
-        Login
-      </button>
-    </div>
-  </header>
-
-  <!-- BERANDA -->
-  <section class="page active" id="home">
-
-    <div class="hero">
-      <h1 id="greeting">
-        Halo, Siswa X A! 👋
-      </h1>
-
-      <p>
-        Kelola jadwal piket kelas dengan lebih mudah.
-      </p>
-    </div>
-
-    <div class="stats" id="homeStats"></div>
-
-    <div class="section-head">
-      <div>
-        <h2>📅 Jadwal Piket Hari Ini</h2>
-      </div>
-
-      <button class="primary-btn" onclick="showPage('schedule')">
-        Lihat Jadwal Lengkap →
-      </button>
-    </div>
-
-    <div class="student-grid" id="todayStudents"></div>
-
-  </section>
-
-  <!-- JADWAL -->
-  <section class="page" id="schedule">
-
-    <div>
-      <h1>📅 Jadwal Piket</h1>
-      <p class="muted">
-        Lihat pembagian piket berdasarkan hari.
-      </p>
-    </div>
-
-    <div class="tabs" id="dayTabs"></div>
-
-    <div class="student-grid" id="scheduleStudents"></div>
-
-  </section>
-
-  <!-- SISWA -->
-  <section class="page" id="students">
-
-    <div class="section-head">
-
-      <div>
-        <h1>👥 Daftar Siswa</h1>
-        <p class="muted">
-          Kelola data anggota kelas.
-        </p>
-      </div>
-
-      <button class="primary-btn" onclick="openStudentModal()">
-        ＋ Tambah Siswa
-      </button>
-
-    </div>
-
-    <div class="toolbar">
-
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="🔎 Cari nama siswa..."
-        oninput="renderStudents()"
-      >
-
-      <select id="filterDay" onchange="renderStudents()">
-        <option value="">Semua Hari</option>
-        <option>Senin</option>
-        <option>Selasa</option>
-        <option>Rabu</option>
-        <option>Kamis</option>
-        <option>Jumat</option>
-      </select>
-
-    </div>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Kelas</th>
-            <th>Hari</th>
-            <th>Waktu</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-
-        <tbody id="studentTable"></tbody>
-
-      </table>
-
-    </div>
-
-  </section>
-
-  <!-- REKAP -->
-  <section class="page" id="recap">
-
-    <div>
-      <h1>📊 Rekap Piket</h1>
-      <p class="muted">
-        Pantau pelaksanaan piket kelas.
-      </p>
-    </div>
-
-    <div class="tabs">
-      <button class="active" onclick="renderRecap('Harian', this)">
-        Harian
-      </button>
-
-      <button onclick="renderRecap('Mingguan', this)">
-        Mingguan
-      </button>
-
-      <button onclick="renderRecap('Bulanan', this)">
-        Bulanan
-      </button>
-    </div>
-
-    <div class="stats" id="recapStats"></div>
-
-    <div id="recapContent"></div>
-
-  </section>
-
-  <!-- PENGINGAT -->
-  <section class="page" id="reminder">
-
-    <div class="section-head">
-
-      <div>
-        <h1>🔔 Pengingat Piket</h1>
-
-        <p class="muted">
-          Jangan sampai lupa jadwal piketmu.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="card" id="reminderContent"></div>
-
-  </section>
-
-  <!-- PENGATURAN -->
-  <section class="page" id="settings">
-
-    <div>
-      <h1>⚙️ Pengaturan</h1>
-
-      <p class="muted">
-        Atur preferensi aplikasi.
-      </p>
-    </div>
-
-    <br>
-
-    <div class="card">
-
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label>Nama Kelas</label>
-          <input id="className" value="X A">
-        </div>
-
-        <div class="form-group">
-          <label>Waktu Piket</label>
-          <input id="defaultTime" value="06.30–07.00">
-        </div>
-
-        <div class="form-group">
-          <label>Tema</label>
-
-          <select id="theme">
-            <option value="light">
-              Terang
-            </option>
-
-            <option value="dark">
-              Gelap
-            </option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-          <label>Notifikasi</label>
-
-          <select id="notifications">
-            <option>Aktif</option>
-            <option>Nonaktif</option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-          <label>Pengingat</label>
-
-          <select id="reminderSetting">
-            <option>Aktif</option>
-            <option>Nonaktif</option>
-          </select>
-
-        </div>
-
-      </div>
-
-      <br>
-
-      <button class="primary-btn" onclick="saveSettings()">
-        💾 Simpan Pengaturan
-      </button>
-
-    </div>
-
-  </section>
-
-</main>
-
-<!-- MOBILE NAV -->
-<nav class="bottom-nav" id="bottomNav"></nav>
-
-<!-- STUDENT MODAL -->
-<div class="modal" id="studentModal">
-
-  <div class="modal-box">
-
-    <h2 id="modalTitle">
-      ＋ Tambah Siswa
-    </h2>
-
-    <p class="muted">
-      Masukkan data siswa.
-    </p>
-
-    <br>
-
-    <div class="form-grid">
-
-      <div class="form-group full">
-        <label>Nama Siswa</label>
-        <input id="studentName">
-      </div>
-
-      <div class="form-group">
-        <label>Kelas</label>
-        <input id="studentClass" value="X A">
-      </div>
-
-      <div class="form-group">
-        <label>Hari Piket</label>
-
-        <select id="studentDay">
-          <option>Senin</option>
-          <option>Selasa</option>
-          <option>Rabu</option>
-          <option>Kamis</option>
-          <option>Jumat</option>
-        </select>
-
-      </div>
-
-      <div class="form-group full">
-        <label>Waktu Piket</label>
-        <input id="studentTime" value="06.30–07.00">
-      </div>
-
-      <div class="form-group">
-        <label>Status</label>
-
-        <select id="studentStatus">
-          <option>Belum Piket</option>
-          <option>Sudah Piket</option>
-          <option>Tidak Melaksanakan</option>
-        </select>
-
-      </div>
-
-    </div>
-
-    <div class="modal-actions">
-
-      <button class="cancel-btn" onclick="closeStudentModal()">
-        Batal
-      </button>
-
-      <button class="primary-btn" onclick="saveStudent()">
-        💾 Simpan
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!-- DELETE MODAL -->
-<div class="modal" id="deleteModal">
-
-  <div class="modal-box">
-
-    <h2>🗑️ Hapus Siswa?</h2>
-
-    <p style="margin-top:10px">
-      Apakah kamu yakin ingin menghapus siswa ini?
-    </p>
-
-    <div class="modal-actions">
-
-      <button class="cancel-btn" onclick="closeDeleteModal()">
-        Batal
-      </button>
-
-      <button
-        class="primary-btn"
-        style="background:#e55353"
-        onclick="deleteStudent()"
-      >
-        Hapus Permanen
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!-- LOGIN -->
-<div class="login-screen" id="loginScreen">
-
-  <div class="login-box">
-
-    <div style="font-size:35px">
-      📚
-    </div>
-
-    <h1>
-      MyClass Piket
-    </h1>
-
-    <p class="muted">
-      Silakan login untuk melanjutkan.
-    </p>
-
-    <div class="login-form">
-
-      <label>
-        Username
-      </label>
-
-      <input
-        type="text"
-        id="username"
-        placeholder="Masukkan username"
-      >
-
-      <label>
-        Password
-      </label>
-
-      <input
-        type="password"
-        id="password"
-        placeholder="Masukkan password"
-      >
-
-      <button
-        class="primary-btn"
-        onclick="login()"
-      >
-        Masuk
-      </button>
-
-      <br><br>
-
-      <button
-        class="cancel-btn"
-        style="width:100%"
-        onclick="closeLogin()"
-      >
-        Kembali
-      </button>
-
-    </div>
-
-    <p
-      class="muted"
-      style="margin-top:15px;font-size:12px"
-    >
-      Admin demo: <b>admin</b> / <b>admin123</b>
-    </p>
-
-  </div>
-
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
 <script>
-
 /* =========================
-   DATA AWAL
+   DATA SISWA
 ========================= */
 
 const initialStudents = [
-
   ["Zaki", "Senin"],
   ["Rara", "Senin"],
   ["Damar", "Senin"],
@@ -1120,3 +44,1008 @@ const initialStudents = [
   ["Zidan", "Jumat"],
   ["Hani", "Jumat"],
   ["Mia", "Jumat"]
+];
+
+/* =========================
+   STORAGE
+========================= */
+
+let students = JSON.parse(localStorage.getItem("myclass_students"));
+
+if (!students) {
+  students = initialStudents.map((s, i) => ({
+    id: Date.now() + i,
+    name: s[0],
+    className: "X A",
+    day: s[1],
+    time: "06.30–07.00",
+    status: "Belum Piket"
+  }));
+
+  saveData();
+}
+
+let currentUser =
+  JSON.parse(localStorage.getItem("myclass_user")) || null;
+
+let editingId = null;
+let deletingId = null;
+let selectedDay = "Senin";
+
+/* =========================
+   SETTINGS
+========================= */
+
+let settings = JSON.parse(
+  localStorage.getItem("myclass_settings")
+) || {
+  className: "X A",
+  defaultTime: "06.30–07.00",
+  theme: "light",
+  notifications: "Aktif",
+  reminder: "Aktif"
+};
+
+/* =========================
+   SAVE DATA
+========================= */
+
+function saveData() {
+  localStorage.setItem(
+    "myclass_students",
+    JSON.stringify(students)
+  );
+}
+
+/* =========================
+   TOAST
+========================= */
+
+function toast(message) {
+  const el = document.getElementById("toast");
+
+  el.textContent = message;
+  el.classList.add("show");
+
+  setTimeout(() => {
+    el.classList.remove("show");
+  }, 2500);
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+const navItems = [
+  ["home", "🏠", "Beranda"],
+  ["schedule", "📅", "Jadwal"],
+  ["students", "👥", "Siswa"],
+  ["recap", "📊", "Rekap"],
+  ["reminder", "🔔", "Pengingat"],
+  ["settings", "⚙️", "Pengaturan"]
+];
+
+function buildNavigation() {
+  const side = document.getElementById("sideNav");
+  const bottom = document.getElementById("bottomNav");
+
+  side.innerHTML = "";
+  bottom.innerHTML = "";
+
+  navItems.forEach(item => {
+    const [id, icon, label] = item;
+
+    const sideBtn = document.createElement("button");
+    sideBtn.innerHTML = `${icon} &nbsp; ${label}`;
+    sideBtn.onclick = () => showPage(id);
+
+    const bottomBtn = document.createElement("button");
+    bottomBtn.innerHTML =
+      `<span>${icon}</span>${label}`;
+    bottomBtn.onclick = () => showPage(id);
+
+    side.appendChild(sideBtn);
+    bottom.appendChild(bottomBtn);
+  });
+
+  updateNavigation("home");
+}
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  const page = document.getElementById(id);
+
+  if (page) {
+    page.classList.add("active");
+  }
+
+  updateNavigation(id);
+
+  if (id === "home") renderHome();
+  if (id === "schedule") renderSchedule();
+  if (id === "students") renderStudents();
+  if (id === "recap") renderRecap("Harian");
+  if (id === "reminder") renderReminder();
+  if (id === "settings") loadSettings();
+}
+
+function updateNavigation(activeId) {
+  document.querySelectorAll(".nav button").forEach((btn, i) => {
+    btn.classList.toggle(
+      "active",
+      navItems[i][0] === activeId
+    );
+  });
+
+  document.querySelectorAll(".bottom-nav button").forEach(
+    (btn, i) => {
+      btn.classList.toggle(
+        "active",
+        navItems[i][0] === activeId
+      );
+    }
+  );
+}
+
+/* =========================
+   DATE
+========================= */
+
+function updateDate() {
+  const now = new Date();
+
+  const text = now.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("dateDisplay").textContent = text;
+}
+
+/* =========================
+   TODAY
+========================= */
+
+function getToday() {
+  const days = [
+    "Minggu",
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu"
+  ];
+
+  return days[new Date().getDay()];
+}
+
+/* =========================
+   HOME
+========================= */
+
+function renderHome() {
+  const today = getToday();
+
+  const todayStudents = students.filter(
+    s => s.day === today
+  );
+
+  document.getElementById("greeting").textContent =
+    `Halo, ${currentUser && currentUser.role === "student"
+      ? currentUser.name
+      : "Siswa"} ${settings.className}! 👋`;
+
+  const sudah = todayStudents.filter(
+    s => s.status === "Sudah Piket"
+  ).length;
+
+  const belum = todayStudents.filter(
+    s => s.status === "Belum Piket"
+  ).length;
+
+  document.getElementById("homeStats").innerHTML = `
+    <div class="card stat">
+      <div class="stat-icon">👥</div>
+      <div>
+        <div class="stat-number">${todayStudents.length}</div>
+        <div class="muted">Siswa Terjadwal</div>
+      </div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-icon">✅</div>
+      <div>
+        <div class="stat-number">${sudah}</div>
+        <div class="muted">Sudah Piket</div>
+      </div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-icon">⏳</div>
+      <div>
+        <div class="stat-number">${belum}</div>
+        <div class="muted">Belum Piket</div>
+      </div>
+    </div>
+  `;
+
+  const container =
+    document.getElementById("todayStudents");
+
+  if (!todayStudents.length) {
+    container.innerHTML = `
+      <div class="card empty">
+        📭 Tidak ada jadwal piket hari ini.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML =
+    todayStudents.map(studentCard).join("");
+}
+
+/* =========================
+   STUDENT CARD
+========================= */
+
+function studentCard(student) {
+  let statusClass = "status-belum";
+
+  if (student.status === "Sudah Piket") {
+    statusClass = "status-sudah";
+  }
+
+  if (student.status === "Tidak Melaksanakan") {
+    statusClass = "status-tidak";
+  }
+
+  const icon =
+    student.status === "Sudah Piket"
+      ? "🟢"
+      : student.status === "Tidak Melaksanakan"
+      ? "🔴"
+      : "🟡";
+
+  return `
+    <div class="student-card">
+      <div class="student-name">
+        👤 ${escapeHTML(student.name)}
+      </div>
+
+      <span class="day-badge ${student.day}">
+        📅 ${student.day}
+      </span>
+
+      <div class="muted">
+        ⏰ ${student.time}
+      </div>
+
+      <div class="status ${statusClass}">
+        ${icon} ${student.status}
+      </div>
+
+      ${
+        currentUser?.role === "student" &&
+        currentUser.name.toLowerCase() ===
+          student.name.toLowerCase()
+          ? `
+            <button
+              class="primary-btn"
+              style="margin-top:12px;width:100%;"
+              onclick="markDone(${student.id})"
+            >
+              ✅ Selesai Piket
+            </button>
+          `
+          : ""
+      }
+    </div>
+  `;
+}
+
+/* =========================
+   MARK DONE
+========================= */
+
+function markDone(id) {
+  const student = students.find(s => s.id === id);
+
+  if (!student) return;
+
+  student.status = "Sudah Piket";
+
+  saveData();
+
+  toast("✅ Piket berhasil dicatat!");
+
+  renderHome();
+  renderSchedule();
+  renderStudents();
+}
+
+/* =========================
+   SCHEDULE
+========================= */
+
+function renderSchedule() {
+  const days = [
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat"
+  ];
+
+  const tabs = document.getElementById("dayTabs");
+
+  tabs.innerHTML = days.map(day => `
+    <button
+      class="${selectedDay === day ? "active" : ""}"
+      onclick="selectDay('${day}')"
+    >
+      ${day}
+    </button>
+  `).join("");
+
+  const list = students.filter(
+    s => s.day === selectedDay
+  );
+
+  const container =
+    document.getElementById("scheduleStudents");
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="card empty">
+        📭 Belum ada siswa pada hari ${selectedDay}.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML =
+    list.map(studentCard).join("");
+}
+
+function selectDay(day) {
+  selectedDay = day;
+  renderSchedule();
+}
+
+/* =========================
+   STUDENTS TABLE
+========================= */
+
+function renderStudents() {
+  const search =
+    document.getElementById("searchInput")
+      ?.value.toLowerCase() || "";
+
+  const filter =
+    document.getElementById("filterDay")
+      ?.value || "";
+
+  let list = students.filter(student => {
+    const matchName =
+      student.name.toLowerCase().includes(search);
+
+    const matchDay =
+      !filter || student.day === filter;
+
+    return matchName && matchDay;
+  });
+
+  const table =
+    document.getElementById("studentTable");
+
+  if (!list.length) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="7">
+          <div class="empty">
+            📭 Siswa tidak ditemukan.
+          </div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  table.innerHTML = list.map((student, index) => `
+    <tr>
+      <td>${index + 1}</td>
+
+      <td>
+        <b>${escapeHTML(student.name)}</b>
+      </td>
+
+      <td>${escapeHTML(student.className)}</td>
+
+      <td>
+        <span class="day-badge ${student.day}">
+          ${student.day}
+        </span>
+      </td>
+
+      <td>${student.time}</td>
+
+      <td>${student.status}</td>
+
+      <td>
+        ${
+          currentUser?.role === "admin"
+            ? `
+              <button
+                class="action-btn"
+                onclick="openStudentModal(${student.id})"
+              >
+                ✏️
+              </button>
+
+              <button
+                class="action-btn delete-btn"
+                onclick="openDeleteModal(${student.id})"
+              >
+                🗑️
+              </button>
+            `
+            : "-"
+        }
+      </td>
+    </tr>
+  `).join("");
+}
+
+/* =========================
+   STUDENT MODAL
+========================= */
+
+function openStudentModal(id = null) {
+  if (currentUser?.role !== "admin") {
+    toast("🔒 Hanya admin yang dapat mengubah data.");
+    return;
+  }
+
+  editingId = id;
+
+  const modal =
+    document.getElementById("studentModal");
+
+  document.getElementById("modalTitle").textContent =
+    id ? "✏️ Edit Siswa" : "＋ Tambah Siswa";
+
+  if (id) {
+    const student =
+      students.find(s => s.id === id);
+
+    if (!student) return;
+
+    document.getElementById("studentName").value =
+      student.name;
+
+    document.getElementById("studentClass").value =
+      student.className;
+
+    document.getElementById("studentDay").value =
+      student.day;
+
+    document.getElementById("studentTime").value =
+      student.time;
+
+    document.getElementById("studentStatus").value =
+      student.status;
+
+  } else {
+    document.getElementById("studentName").value = "";
+    document.getElementById("studentClass").value =
+      settings.className;
+    document.getElementById("studentDay").value =
+      "Senin";
+    document.getElementById("studentTime").value =
+      settings.defaultTime;
+    document.getElementById("studentStatus").value =
+      "Belum Piket";
+  }
+
+  modal.classList.add("show");
+}
+
+function closeStudentModal() {
+  document
+    .getElementById("studentModal")
+    .classList.remove("show");
+
+  editingId = null;
+}
+
+function saveStudent() {
+  if (currentUser?.role !== "admin") {
+    toast("🔒 Hanya admin yang dapat mengubah data.");
+    return;
+  }
+
+  const name =
+    document.getElementById("studentName").value.trim();
+
+  const className =
+    document.getElementById("studentClass").value.trim();
+
+  const day =
+    document.getElementById("studentDay").value;
+
+  const time =
+    document.getElementById("studentTime").value.trim();
+
+  const status =
+    document.getElementById("studentStatus").value;
+
+  if (!name) {
+    toast("⚠️ Nama siswa wajib diisi.");
+    return;
+  }
+
+  if (editingId) {
+    const student =
+      students.find(s => s.id === editingId);
+
+    student.name = name;
+    student.className = className;
+    student.day = day;
+    student.time = time;
+    student.status = status;
+
+    toast("✅ Perubahan berhasil disimpan!");
+
+  } else {
+    students.push({
+      id: Date.now(),
+      name,
+      className,
+      day,
+      time,
+      status
+    });
+
+    toast("✅ Siswa berhasil ditambahkan!");
+  }
+
+  saveData();
+
+  closeStudentModal();
+
+  renderHome();
+  renderSchedule();
+  renderStudents();
+}
+
+/* =========================
+   DELETE
+========================= */
+
+function openDeleteModal(id) {
+  if (currentUser?.role !== "admin") {
+    toast("🔒 Hanya admin yang dapat menghapus siswa.");
+    return;
+  }
+
+  deletingId = id;
+
+  document
+    .getElementById("deleteModal")
+    .classList.add("show");
+}
+
+function closeDeleteModal() {
+  deletingId = null;
+
+  document
+    .getElementById("deleteModal")
+    .classList.remove("show");
+}
+
+function deleteStudent() {
+  if (!deletingId) return;
+
+  students = students.filter(
+    s => s.id !== deletingId
+  );
+
+  saveData();
+
+  closeDeleteModal();
+
+  toast("🗑️ Siswa berhasil dihapus.");
+
+  renderHome();
+  renderSchedule();
+  renderStudents();
+}
+
+/* =========================
+   RECAP
+========================= */
+
+function renderRecap(type = "Harian", button = null) {
+  document
+    .querySelectorAll("#recap .tabs button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if (button) {
+    button.classList.add("active");
+  }
+
+  const total = students.length;
+
+  const sudah = students.filter(
+    s => s.status === "Sudah Piket"
+  ).length;
+
+  const belum = students.filter(
+    s => s.status === "Belum Piket"
+  ).length;
+
+  const tidak = students.filter(
+    s => s.status === "Tidak Melaksanakan"
+  ).length;
+
+  document.getElementById("recapStats").innerHTML = `
+    <div class="card stat">
+      <div class="stat-icon">📋</div>
+      <div>
+        <div class="stat-number">${total}</div>
+        <div class="muted">Total Siswa</div>
+      </div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-icon">✅</div>
+      <div>
+        <div class="stat-number">${sudah}</div>
+        <div class="muted">Sudah Piket</div>
+      </div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-icon">⏳</div>
+      <div>
+        <div class="stat-number">${belum}</div>
+        <div class="muted">Belum Piket</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("recapContent").innerHTML = `
+    <div class="card">
+
+      <h3>📊 Rekap ${type}</h3>
+
+      <br>
+
+      <p>
+        🟢 Sudah Piket:
+        <b>${sudah}</b>
+      </p>
+
+      <br>
+
+      <p>
+        🟡 Belum Piket:
+        <b>${belum}</b>
+      </p>
+
+      <br>
+
+      <p>
+        🔴 Tidak Melaksanakan:
+        <b>${tidak}</b>
+      </p>
+
+      <br>
+
+      <h3>📈 Persentase Pelaksanaan</h3>
+
+      <br>
+
+      <div class="progress">
+        <span style="width:${
+          total ? (sudah / total) * 100 : 0
+        }%"></span>
+      </div>
+
+      <br>
+
+      <b>
+        ${
+          total
+            ? Math.round((sudah / total) * 100)
+            : 0
+        }%
+      </b>
+
+    </div>
+  `;
+}
+
+/* =========================
+   REMINDER
+========================= */
+
+function renderReminder() {
+  const tomorrowIndex =
+    (new Date().getDay() + 1) % 7;
+
+  const days = [
+    "Minggu",
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu"
+  ];
+
+  const tomorrow = days[tomorrowIndex];
+
+  const list = students.filter(
+    s => s.day === tomorrow
+  );
+
+  const active =
+    settings.reminder === "Aktif";
+
+  document.getElementById("reminderContent").innerHTML = `
+    <h2>🔔 Jadwal Piket Besok</h2>
+
+    <br>
+
+    ${
+      list.length
+        ? `<p>
+            ${list.map(s => escapeHTML(s.name)).join(", ")}
+            mendapat jadwal piket besok.
+          </p>`
+        : `<p class="muted">
+            Tidak ada jadwal piket besok.
+          </p>`
+    }
+
+    <br>
+
+    <p>⏰ Waktu Pengingat: <b>06.45</b></p>
+
+    <p style="margin-top:8px">
+      📅 Hari: Senin–Jumat
+    </p>
+
+    <br>
+
+    <p>
+      ${
+        active
+          ? "🟢 Pengingat Aktif"
+          : "🔴 Pengingat Nonaktif"
+      }
+    </p>
+
+    <br>
+
+    <button
+      class="primary-btn"
+      onclick="toggleReminder()"
+    >
+      ${
+        active
+          ? "🔕 Nonaktifkan Pengingat"
+          : "🔔 Aktifkan Pengingat"
+      }
+    </button>
+  `;
+}
+
+function toggleReminder() {
+  settings.reminder =
+    settings.reminder === "Aktif"
+      ? "Nonaktif"
+      : "Aktif";
+
+  localStorage.setItem(
+    "myclass_settings",
+    JSON.stringify(settings)
+  );
+
+  renderReminder();
+
+  toast(
+    settings.reminder === "Aktif"
+      ? "🔔 Pengingat diaktifkan!"
+      : "🔕 Pengingat dinonaktifkan."
+  );
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+function loadSettings() {
+  document.getElementById("className").value =
+    settings.className;
+
+  document.getElementById("defaultTime").value =
+    settings.defaultTime;
+
+  document.getElementById("theme").value =
+    settings.theme;
+
+  document.getElementById("notifications").value =
+    settings.notifications;
+
+  document.getElementById("reminderSetting").value =
+    settings.reminder;
+
+  applyTheme();
+}
+
+function saveSettings() {
+  settings.className =
+    document.getElementById("className").value;
+
+  settings.defaultTime =
+    document.getElementById("defaultTime").value;
+
+  settings.theme =
+    document.getElementById("theme").value;
+
+  settings.notifications =
+    document.getElementById("notifications").value;
+
+  settings.reminder =
+    document.getElementById("reminderSetting").value;
+
+  localStorage.setItem(
+    "myclass_settings",
+    JSON.stringify(settings)
+  );
+
+  applyTheme();
+
+  renderHome();
+  renderSchedule();
+  renderReminder();
+
+  toast("✅ Pengaturan berhasil disimpan!");
+}
+
+function applyTheme() {
+  document.body.classList.toggle(
+    "dark",
+    settings.theme === "dark"
+  );
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+/*
+   A=1
+   B=2
+   ...
+   Z=26
+
+   Contoh:
+   Zidan
+   Z=26
+   I=9
+   D=4
+   A=1
+   N=14
+
+   Password:
+   269114
+*/
+
+function nameToPassword(name) {
+  return name
+    .toUpperCase()
+    .replace(/[^A-Z]/g, "")
+    .split("")
+    .map(char =>
+      char.charCodeAt(0) - 64
+    )
+    .join("");
+}
+
+function login() {
+  const username =
+    document.getElementById("username")
+      .value.trim();
+
+  const password =
+    document.getElementById("password")
+      .value.trim();
+
+  if (
+    username.toLowerCase() === "admin" &&
+    password === "admin123"
+  ) {
+    currentUser = {
+      role: "admin",
+      name: "Admin"
+    };
+
+    localStorage.setItem(
+      "myclass_user",
+      JSON.stringify(currentUser)
+    );
+
+    closeLogin();
+
+    updateUserUI();
+
+    toast("✅ Login sebagai Admin berhasil!");
+
+    return;
+  }
+
+  const student = students.find(
+    s =>
+      s.name.toLowerCase() ===
+        username.toLowerCase() &&
+      nameToPassword(s.name) === password
+  );
+
+  if (!student) {
+    toast("❌ Username atau password salah!");
+    return;
+  }
+
+  currentUser = {
+    role: "student",
+    name: student.name,
+    id: student.id
+  };
+
+  localStorage.setItem(
+    "myclass_user",
+    JSON.stringify(currentUser)
+  );
+
+  closeLogin();
+
+  updateUserUI();
+
+  toast(`✅ Selamat datang, ${student.name}!`);
+}
+
+function updateUserUI() {
+  const chip =
+    document.getElementById("userChip");
+
+  const button =
+    document.getElementById("loginButton");
+
+  if (currentUser) {
+    chip.textContent =
+      currentUser.role === "admin"
+        ? "👑 Admin"
+        : `👤 ${currentUser.name}`;
+
+    button.textContent = "Logout";
+    button.onclick = logout;
+
+  } else {
+    chip.textContent = "👤 Tamu";
+    button.textContent = "Login";
+    button.onclick = openLogin;
+  }
+}
+
+function logout() {
+  currentUser = null;
